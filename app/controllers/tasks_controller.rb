@@ -20,6 +20,26 @@ class TasksController < ApplicationController
     end
   end
 
+  def show
+    @task = Task.find(params[:id])
+  end
+
+  def edit
+    @task = Task.find(params[:id])
+  end
+
+  def update
+    @task = Task.find(params[:id])
+
+    if @task.update(task_params)
+      # TODO add flash message with success
+      redirect_to tasks_path
+    else
+      # TODO add flash message with errors
+      render new_task_path
+    end
+  end
+
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
@@ -27,6 +47,7 @@ class TasksController < ApplicationController
   end
 
   private
+
   def task_params
     params.require(:task).permit(:title, :description)
   end
